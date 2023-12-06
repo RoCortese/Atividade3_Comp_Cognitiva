@@ -24,24 +24,25 @@ namespace Projeto {
 						int pixelsTotais = bitmapEntrada.Width * bitmapEntrada.Height;
 
 						for (int e = 0, s = 0; s < pixelsTotais; e += 4, s++) {
-							if((entrada[e+1] > entrada[e] ) && (entrada[e+1] > entrada[e+2])){
+							if ((entrada[e+1] > entrada[e] ) && (entrada[e+1] > entrada[e+2])){
 								saida[s] = 0;
-							}else{
+							} else {
 								saida[s] = 255;
 							}
 						}
-
 						formas = Forma.DetectarFormas(saida, largura, altura, considerar8vizinhos);
+						
 						objetos.Add("Exercicio1_"+i+".png", formas.Count);
 					}
+
 					using (FileStream stream = new FileStream("C:\\Users\\RODRIGO.CORTESE\\Downloads\\Atv3_Rodrigo_Fernando\\Atv3_Rodrigo_Fernando\\Atv3\\Exercicio 1\\Exercicio1_"+i+"_saida"+".png", FileMode.OpenOrCreate, FileAccess.Write)) {
 						bitmapSaidaArit.Encode(stream, SKEncodedImageFormat.Png, 100);
 					}
 
 				}
 			}
-
 			var objordenados = objetos.OrderByDescending(kv => kv.Value).ToDictionary(kv => kv.Key, kv => kv.Value);
+			
 			for (int i = 0; i < objordenados.Count; i++){
     			Console.WriteLine(objordenados.ElementAt(i).Key + " - "+objordenados.ElementAt(i).Value);
 			}

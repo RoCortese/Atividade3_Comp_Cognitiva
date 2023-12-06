@@ -3,23 +3,83 @@
 namespace Projeto {
 	class Program {
 		static void Main(string[] args) {
-			// ****************************************************************************
-			// Esse código é só um começo!
-			// ****************************************************************************
+			using (SKBitmap bitmapEntrada = SKBitmap.Decode("C:\\Users\\FILHO.FERNANDO\\Downloads\\Atv3_Rodrigo_Fernando\\Atv3_Rodrigo_Fernando\\Atv3\\Exercicio 2\\Exercicio2.png"),
+				bitmapSaida = new SKBitmap(new SKImageInfo(bitmapEntrada.Width, bitmapEntrada.Height, SKColorType.Bgra8888))) {
 
-			using (SKBitmap bitmap = SKBitmap.Decode("Caminho da imagem de entrada")) {
-				Console.WriteLine(bitmap.ColorType);
+				Console.WriteLine(bitmapEntrada.ColorType);
+				Console.WriteLine(bitmapSaida.ColorType);
 
 				unsafe {
+					byte* entrada = (byte*)bitmapEntrada.GetPixels();
+					byte* saida = (byte*)bitmapSaida.GetPixels();
+					int pixelsTotais = bitmapEntrada.Width * bitmapEntrada.Height;
 
-					byte* ptr = (byte*)bitmap.GetPixels();
+					for (int e = 0, s = 0; s < pixelsTotais; e += 4, s++) {
 
+						byte H, S, V;
+
+						byte r = entrada[e+2];
+						byte g = entrada[e+1];
+						byte b = entrada[e];
+
+						HSV(r, g, b, out H, out S, out V);
+						
+						if (V >= 85) {
+							saida[e + 3] = entrada[e + 3];
+							saida[e + 2] = entrada[e + 2];
+							saida[e + 1] = entrada[e + 1];
+							saida[e] = entrada[e];
+						} else {
+							saida[e + 3] = 255;
+							saida[e + 2] = 0;
+							saida[e + 1] = 0;
+							saida[e] = 0;
+						}
+					}
 				}
-
-				using (FileStream stream = new FileStream("Caminho da imagem de saída", FileMode.OpenOrCreate, FileAccess.Write)) {
-					bitmap.Encode(stream, SKEncodedImageFormat.Png, 100);
+																	
+				using (FileStream stream = new FileStream("C:\\Users\\FILHO.FERNANDO\\Downloads\\Atv3_Rodrigo_Fernando\\Atv3_Rodrigo_Fernando\\Atv3\\Exercicio 2\\Exercicio2_saida.png", FileMode.OpenOrCreate, FileAccess.Write)) {
+					bitmapSaida.Encode(stream, SKEncodedImageFormat.Png, 100);
 				}
 			}
+		}
+
+		static void HSV(byte r, byte g, byte b, out byte h, out byte s, out byte v) {
+
+			double red = (double)r / 255.0;
+			double green = (double)g / 255.0;
+			double blue = (double)b / 255.0;
+			double maximo = Math.Max(Math.Max(red, green), blue);
+			double minimo = Math.Min(Math.Min(red, green), blue);
+			double H = 0;
+			double S = ((maximo == 0) ? 0 : ((maximo - minimo) / maximo));
+			double V = maximo;
+
+			if (maximo != minimo) {
+
+				if (maximo == red) {
+
+					if (green >= blue)
+
+						H = (60.0 * ((green - blue) / (maximo - minimo))) / 360.0;
+
+					else
+
+						H = ((60.0 * ((green - blue) / (maximo - minimo))) + 360.0) / 360.0;
+
+				} else if (maximo == green) {
+
+					H = ((60.0 * ((blue - red) / (maximo - minimo))) + 120.0) / 360.0;
+
+				} else {
+
+					H = ((60.0 * ((red - green) / (maximo - minimo))) + 240.0) / 360.0;
+				}
+			}
+
+			h = (byte)(255.0 * H);
+			s = (byte)(255.0 * S);
+			v = (byte)(255.0 * V);
 		}
 	}
 }

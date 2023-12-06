@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "JLEdF363ZYpiAFoM2OAthyImLKvOEXBOCNvtWyaOrDCvCPAE4Cf/qJE/ujkfGobqS91cVtHa5hASYUtLflE7Lw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\RODRIGO.CORTESE\\Downloads\\Atv3_Rodrigo_Fernando\\Atv3_Rodrigo_Fernando\\Atv3\\Exercicio 2\\Projeto.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\RODRIGO.CORTESE\\.nuget\\packages\\skiasharp\\2.88.3\\skiasharp.2.88.3.nupkg.sha512",
+    "C:\\Users\\RODRIGO.CORTESE\\.nuget\\packages\\skiasharp.nativeassets.linux\\2.88.3\\skiasharp.nativeassets.linux.2.88.3.nupkg.sha512",
+    "C:\\Users\\RODRIGO.CORTESE\\.nuget\\packages\\skiasharp.nativeassets.macos\\2.88.3\\skiasharp.nativeassets.macos.2.88.3.nupkg.sha512",
+    "C:\\Users\\RODRIGO.CORTESE\\.nuget\\packages\\skiasharp.nativeassets.win32\\2.88.3\\skiasharp.nativeassets.win32.2.88.3.nupkg.sha512"
+  ],
+  "logs": []
+}
